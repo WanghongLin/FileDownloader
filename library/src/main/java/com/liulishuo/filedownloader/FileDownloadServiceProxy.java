@@ -20,6 +20,8 @@ import android.content.Context;
 
 import com.liulishuo.filedownloader.model.FileDownloadHeader;
 import com.liulishuo.filedownloader.services.FDServiceSharedHandler;
+import com.liulishuo.filedownloader.services.FileDownloadServiceJobScheduler;
+import com.liulishuo.filedownloader.services.JobServiceWorkaround;
 import com.liulishuo.filedownloader.util.FileDownloadProperties;
 
 /**
@@ -54,9 +56,13 @@ public class FileDownloadServiceProxy implements IFileDownloadServiceProxy {
     private final IFileDownloadServiceProxy handler;
 
     private FileDownloadServiceProxy() {
-        handler = FileDownloadProperties.getImpl().processNonSeparate
-                ? new FileDownloadServiceSharedTransmit()
-                : new FileDownloadServiceUIGuard();
+        if (JobServiceWorkaround.shouldHandledByJobService()) {
+            handler = new FileDownloadServiceJobScheduler();
+        } else {
+            handler = FileDownloadProperties.getImpl().processNonSeparate
+                    ? new FileDownloadServiceSharedTransmit()
+                    : new FileDownloadServiceUIGuard();
+        }
     }
 
     @Override

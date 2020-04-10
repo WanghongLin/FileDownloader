@@ -16,6 +16,9 @@
 
 package com.liulishuo.filedownloader.services;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.app.job.JobWorkItem;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -153,7 +156,6 @@ public abstract class BaseFileServiceUIGuard<CALLBACK extends Binder, INTERFACE 
         }
 
         if (!bindContexts.contains(context)) {
-            // 对称,只有一次remove，防止内存泄漏
             bindContexts.add(context);
         }
 

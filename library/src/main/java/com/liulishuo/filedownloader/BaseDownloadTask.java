@@ -574,8 +574,8 @@ public interface BaseDownloadTask {
          * {@link MessageSnapshotThreadPool}.
          *
          * @param task is over, the status would be one of below:
-         *             {@link FileDownloadStatus#completed}、{@link FileDownloadStatus#warn}、
-         *             {@link FileDownloadStatus#error}、{@link FileDownloadStatus#paused}.
+         *             {@link FileDownloadStatus#completed}, {@link FileDownloadStatus#warn},
+         *             {@link FileDownloadStatus#error}, {@link FileDownloadStatus#paused}.
          * @see FileDownloadStatus#isOver(int)
          */
         void over(final BaseDownloadTask task);

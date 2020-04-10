@@ -19,4 +19,14 @@ package com.liulishuo.filedownloader.util;
 public class ExtraKeys {
 
     public static final String IS_FOREGROUND = "is_foreground";
+
+    public static final String JOB_SERVICE_URL = "job_service_url";
+    public static final String JOB_SERVICE_PATH = "job_service_path";
+    public static final String JOB_SERVICE_PATH_AS_DIRECTORY = "job_service_path_as_directory";
+    public static final String JOB_SERVICE_CALLBACK_PROGRESS_TIMES = "job_service_callback_progress_times";
+    public static final String JOB_SERVICE_CALLBACK_PROGRESS_MIN_INTERVAL_MILLIS = "job_service_callback_progress_min_interval_millis";
+    public static final String JOB_SERVICE_AUTO_RETRY_TIMES = "job_service_auto_retry_times";
+    public static final String JOB_SERVICE_FORCE_RE_DOWNLOAD = "job_service_force_re_download";
+    public static final String JOB_SERVICE_FILE_DOWNLOAD_HEADER = "job_service_file_download_header";
+    public static final String JOB_SERVICE_IS_WIFI_REQUIRED = "job_service_is_wifi_required";
 }

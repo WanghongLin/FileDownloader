@@ -135,6 +135,7 @@ public class FileDownloadProperties {
     private static final String KEY_BROADCAST_COMPLETED = "broadcast.completed";
     private static final String KEY_TRIAL_CONNECTION_HEAD_METHOD
             = "download.trial-connection-head-method";
+    private static final String KEY_DOWNLOAD_USE_JOB_SCHEDULER = "download.use-job-scheduler";
 
     public final int downloadMinProgressStep;
     public final long downloadMinProgressTime;
@@ -144,6 +145,7 @@ public class FileDownloadProperties {
     public final boolean fileNonPreAllocation;
     public final boolean broadcastCompleted;
     public final boolean trialConnectionHeadMethod;
+    public final boolean useJobScheduler;
 
     public static class HolderClass {
         private static final FileDownloadProperties INSTANCE = new FileDownloadProperties();
@@ -174,6 +176,7 @@ public class FileDownloadProperties {
         String fileNonPreAllocation = null;
         String broadcastCompleted = null;
         String downloadTrialConnectionHeadMethod = null;
+        String downloadUseJobScheduler = null;
 
         Properties p = new Properties();
         InputStream inputStream = null;
@@ -192,6 +195,7 @@ public class FileDownloadProperties {
                 fileNonPreAllocation = p.getProperty(KEY_FILE_NON_PRE_ALLOCATION);
                 broadcastCompleted = p.getProperty(KEY_BROADCAST_COMPLETED);
                 downloadTrialConnectionHeadMethod = p.getProperty(KEY_TRIAL_CONNECTION_HEAD_METHOD);
+                downloadUseJobScheduler = p.getProperty(KEY_DOWNLOAD_USE_JOB_SCHEDULER);
             }
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
@@ -302,6 +306,16 @@ public class FileDownloadProperties {
             this.trialConnectionHeadMethod = downloadTrialConnectionHeadMethod.equals(TRUE_STRING);
         } else {
             this.trialConnectionHeadMethod = false;
+        }
+
+        if (!TRUE_STRING.equals(downloadUseJobScheduler) &&
+                !FALSE_STRING.equals(downloadUseJobScheduler)) {
+            this.useJobScheduler = false;
+            throw new IllegalStateException(
+                    FileDownloadUtils.formatString("the value of '%s' must be '%s' or '%s'",
+                            KEY_DOWNLOAD_USE_JOB_SCHEDULER, TRUE_STRING, FALSE_STRING));
+        } else {
+            this.useJobScheduler = TRUE_STRING.equals(downloadUseJobScheduler);
         }
 
         if (FileDownloadLog.NEED_LOG) {
