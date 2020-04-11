@@ -320,7 +320,7 @@ public class FileDownloadProperties {
 
         if (FileDownloadLog.NEED_LOG) {
             FileDownloadLog.i(FileDownloadProperties.class, "init properties %d\n load properties:"
-                            + " %s=%B; %s=%B; %s=%d; %s=%d; %s=%d; %s=%B; %s=%B; %s=%B",
+                            + " %s=%B; %s=%B; %s=%d; %s=%d; %s=%d; %s=%B; %s=%B; %s=%B; %s=%B",
                     System.currentTimeMillis() - start,
                     KEY_HTTP_LENIENT, this.httpLenient,
                     KEY_PROCESS_NON_SEPARATE, this.processNonSeparate,
@@ -329,7 +329,8 @@ public class FileDownloadProperties {
                     KEY_DOWNLOAD_MAX_NETWORK_THREAD_COUNT, this.downloadMaxNetworkThreadCount,
                     KEY_FILE_NON_PRE_ALLOCATION, this.fileNonPreAllocation,
                     KEY_BROADCAST_COMPLETED, this.broadcastCompleted,
-                    KEY_TRIAL_CONNECTION_HEAD_METHOD, this.trialConnectionHeadMethod);
+                    KEY_TRIAL_CONNECTION_HEAD_METHOD, this.trialConnectionHeadMethod,
+                    KEY_DOWNLOAD_USE_JOB_SCHEDULER, this.useJobScheduler);
         }
     }
 

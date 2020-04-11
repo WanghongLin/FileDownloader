@@ -9,6 +9,8 @@
         <service
             android:name=".services.FileDownloadService$SeparateProcessService"
             android:process=":filedownloader" />
+        <service android:name=".services.FileDownloadJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

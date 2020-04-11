@@ -3,6 +3,7 @@ package com.liulishuo.filedownloader.demo;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import com.liulishuo.filedownloader.FileDownloadMonitor;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.demo.performance.PerformanceTestActivity;
+import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 /**
  * Created by Jacksgong on 12/17/15.
@@ -79,6 +81,22 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = Uri.parse(getString(R.string.app_github_url));
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        new Handler(getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // now our application is in background
+                String path = FileDownloadUtils.getDefaultSaveFilePath(Constant.LIULISHUO_APK_URL);
+                FileDownloader.getImpl().create(Constant.LIULISHUO_APK_URL)
+                        .setPath(path, false)
+                        .start();
+            }
+        }, 3000);
     }
 
     @Override

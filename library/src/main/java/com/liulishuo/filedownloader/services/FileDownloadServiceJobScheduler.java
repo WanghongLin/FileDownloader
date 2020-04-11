@@ -16,15 +16,20 @@ import com.liulishuo.filedownloader.util.FileDownloadLog;
 
 public class FileDownloadServiceJobScheduler implements IFileDownloadServiceProxy {
 
+    private static final String TAG = "FileDownloadServiceJobS";
+
     @Override
     public boolean start(String url, String path, boolean pathAsDirectory, int callbackProgressTimes, int callbackProgressMinIntervalMillis, int autoRetryTimes, boolean forceReDownload, FileDownloadHeader header, boolean isWifiRequired) {
         if (FileDownloadHelper.getAppContext() == null) {
-            FileDownloadLog.e(this, "application context is null");
+            if (FileDownloadLog.NEED_LOG) {
+                FileDownloadLog.e(TAG, "application context is null");
+            }
             return false;
         }
 
-        Bundle bundle = new Bundle();
+        final Bundle bundle = new Bundle();
         bundle.putString(ExtraKeys.JOB_SERVICE_URL, url);
+        bundle.putString(ExtraKeys.JOB_SERVICE_PATH, path);
         bundle.putBoolean(ExtraKeys.JOB_SERVICE_PATH_AS_DIRECTORY, pathAsDirectory);
         bundle.putInt(ExtraKeys.JOB_SERVICE_CALLBACK_PROGRESS_TIMES, callbackProgressTimes);
         bundle.putInt(ExtraKeys.JOB_SERVICE_CALLBACK_PROGRESS_MIN_INTERVAL_MILLIS, callbackProgressMinIntervalMillis);
@@ -45,7 +50,9 @@ public class FileDownloadServiceJobScheduler implements IFileDownloadServiceProx
             if (jobScheduler != null) {
                 jobScheduler.schedule(jobInfo);
             } else {
-                FileDownloadLog.e(this, "Could not get job scheduler service");
+                if (FileDownloadLog.NEED_LOG) {
+                    FileDownloadLog.e(TAG, "Could not get job scheduler service");
+                }
             }
         }
         return false;
@@ -88,7 +95,8 @@ public class FileDownloadServiceJobScheduler implements IFileDownloadServiceProx
 
     @Override
     public boolean isConnected() {
-        return false;
+        // always return true
+        return true;
     }
 
     @Override
