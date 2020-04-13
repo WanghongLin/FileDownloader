@@ -44,6 +44,7 @@ public class FileDownloadServiceJobScheduler implements IFileDownloadServiceProx
                     .setMinimumLatency(1)
                     .setOverrideDeadline(1)
                     .setTransientExtras(bundle)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                     .build();
             final JobScheduler jobScheduler = (JobScheduler) FileDownloadHelper.getAppContext()
                     .getSystemService(Context.JOB_SCHEDULER_SERVICE);
@@ -52,45 +53,46 @@ public class FileDownloadServiceJobScheduler implements IFileDownloadServiceProx
             } else {
                 if (FileDownloadLog.NEED_LOG) {
                     FileDownloadLog.e(TAG, "Could not get job scheduler service");
+                    return false;
                 }
             }
         }
-        return false;
+        return true;
     }
 
     @Override
     public boolean pause(int id) {
-        return false;
+        return FileDownloadJobService.getDownloadManager().pause(id);
     }
 
     @Override
     public boolean isDownloading(String url, String path) {
-        return false;
+        return FileDownloadJobService.getDownloadManager().isDownloading(url, path);
     }
 
     @Override
     public long getSofar(int downloadId) {
-        return 0;
+        return FileDownloadJobService.getDownloadManager().getSoFar(downloadId);
     }
 
     @Override
     public long getTotal(int downloadId) {
-        return 0;
+        return FileDownloadJobService.getDownloadManager().getTotal(downloadId);
     }
 
     @Override
     public byte getStatus(int downloadId) {
-        return 0;
+        return FileDownloadJobService.getDownloadManager().getStatus(downloadId);
     }
 
     @Override
     public void pauseAllTasks() {
-
+        FileDownloadJobService.getDownloadManager().pauseAll();
     }
 
     @Override
     public boolean isIdle() {
-        return false;
+        return FileDownloadJobService.getDownloadManager().isIdle();
     }
 
     @Override
@@ -101,42 +103,52 @@ public class FileDownloadServiceJobScheduler implements IFileDownloadServiceProx
 
     @Override
     public void bindStartByContext(Context context) {
-
+        if (FileDownloadLog.NEED_LOG) {
+            FileDownloadLog.w(TAG, "do nothing for bindStartByContext() called with: context = [" + context + "]");
+        }
     }
 
     @Override
     public void bindStartByContext(Context context, Runnable connectedRunnable) {
-
+        if (FileDownloadLog.NEED_LOG) {
+            FileDownloadLog.w(TAG, "do nothing for bindStartByContext() called with: context = [" + context + "], connectedRunnable = [" + connectedRunnable + "]");
+        }
     }
 
     @Override
     public void unbindByContext(Context context) {
-
+        if (FileDownloadLog.NEED_LOG) {
+            FileDownloadLog.w(TAG, "do nothing for unbindByContext() called with: context = [" + context + "]");
+        }
     }
 
     @Override
     public void startForeground(int id, Notification notification) {
-
+        if (FileDownloadLog.NEED_LOG) {
+            FileDownloadLog.w(TAG, "do nothing for startForeground() called with: id = [" + id + "], notification = [" + notification + "]");
+        }
     }
 
     @Override
     public void stopForeground(boolean removeNotification) {
-
+        if (FileDownloadLog.NEED_LOG) {
+            FileDownloadLog.w(TAG, "do nothing for stopForeground() called with: removeNotification = [" + removeNotification + "]");
+        }
     }
 
     @Override
     public boolean setMaxNetworkThreadCount(int count) {
-        return false;
+        return FileDownloadJobService.getDownloadManager().setMaxNetworkThreadCount(count);
     }
 
     @Override
     public boolean clearTaskData(int id) {
-        return false;
+        return FileDownloadJobService.getDownloadManager().clearTaskData(id);
     }
 
     @Override
     public void clearAllTaskData() {
-
+        FileDownloadJobService.getDownloadManager().clearAllTaskData();
     }
 
     @Override
